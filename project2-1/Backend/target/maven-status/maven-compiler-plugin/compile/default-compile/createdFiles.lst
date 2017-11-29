@@ -1,0 +1,6 @@
+com\niit\Backend\App.class
+com\niit\Backend\Model\ErrorDomain.class
+com\niit\Backend\DaoImpl\UserDaoImpl.class
+com\niit\Backend\Model\UserDet.class
+com\niit\Backend\Config\DBConfig.class
+com\niit\Backend\Dao\UserDao.class
