@@ -6,27 +6,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-
 import org.springframework.stereotype.Component;
 
-
-@SuppressWarnings("unused")
-@Component
-@Table(name = "C_Forum")
 @Entity
+@Table(name = "C_FORUM")
+@Component
 public class Forum extends ErrorDomain
 {
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getForum_id() {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int forum_id;
+	private String forum_title;
+	@Lob
+	private String description;
+	private String username;
+	private String status;
+	private String date_time;
+	@Lob
+	private String rejected;
+	public int getForum_id() {
 		return forum_id;
 	}
-	public void setForum_id(String forum_id) {
+	public void setForum_id(int forum_id) {
 		this.forum_id = forum_id;
+	}
+	public String getForum_title() {
+		return forum_title;
+	}
+	public void setForum_title(String forum_title) {
+		this.forum_title = forum_title;
 	}
 	public String getDescription() {
 		return description;
@@ -40,6 +48,12 @@ public class Forum extends ErrorDomain
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getDate_time() {
 		return date_time;
 	}
@@ -52,21 +66,5 @@ public class Forum extends ErrorDomain
 	public void setRejected(String rejected) {
 		this.rejected = rejected;
 	}
-	public char getStatus() {
-		return status;
-	}
-	public void setStatus(char status) {
-		this.status = status;
-	}
-	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String forum_id;
-	@Lob
-	private String description;
-	private String username;
-	private String date_time;
-	@Lob
-	private String rejected;
-	private char status;
+	
 }

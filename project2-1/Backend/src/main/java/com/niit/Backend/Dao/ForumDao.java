@@ -4,21 +4,13 @@ import java.util.List;
 
 import com.niit.Backend.Model.Forum;
 
-
-
-public interface ForumDao
+public interface ForumDao 
 {
-
 	public boolean addForum(Forum forum);
-	
-	public boolean deleteForum(int id);
-	
-	public boolean updateForum(Forum forum);
-	
-	public Forum getForum(int id);
-	
-	public List<Forum> getUserForums(String username);
-	
-	public List<Forum> getForumList();
-	
+	public boolean updateForum(Forum forum);	
+	public boolean deleteForum(Forum forum);
+	public Forum getForum(String title);
+	public List<Forum> getForumByUser(String username);
+	public List<Forum> getAllForums();
+
 }
