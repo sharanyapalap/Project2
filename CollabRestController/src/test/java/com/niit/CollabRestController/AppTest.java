@@ -1,4 +1,4 @@
-package com.niit.RestControllers;
+package com.niit.CollabRestController;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

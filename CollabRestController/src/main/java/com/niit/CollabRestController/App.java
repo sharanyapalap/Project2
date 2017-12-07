@@ -1,4 +1,4 @@
-package com.niit.RestControllers;
+package com.niit.CollabRestController;
 
 /**
  * Hello world!

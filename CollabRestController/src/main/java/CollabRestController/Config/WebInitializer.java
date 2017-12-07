@@ -1,14 +1,13 @@
-package com.niit.RestControllers.Config;
+package CollabRestController.Config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	
 	protected Class<?>[] getRootConfigClasses() {
 
-		return new Class[]{WebResolver.class};
+		return new Class[]{webResolver.class};
 	}
 
 	
