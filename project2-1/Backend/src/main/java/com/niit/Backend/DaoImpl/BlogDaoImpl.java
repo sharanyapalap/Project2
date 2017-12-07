@@ -1,125 +1,154 @@
 package com.niit.Backend.DaoImpl;
 
 import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.Backend.Dao.BlogDao;
 import com.niit.Backend.Model.Blog;
-import com.niit.Backend.Model.UserDet;
 
-@SuppressWarnings("deprecation")
+
 @Repository("blogDAO")
-@EnableTransactionManagement
-
-
 public class BlogDaoImpl implements BlogDao 
 {
-private static final Logger log = LoggerFactory.getLogger(BlogDaoImpl.class);
-	
 	@Autowired
-	private SessionFactory sessionFactory;
+	SessionFactory sessionFactory;
 	
-	public BlogDaoImpl(SessionFactory sessionFactory) 
+	public BlogDaoImpl(SessionFactory sessionFactory)
 	{
-		try 
+		this.sessionFactory=sessionFactory;
+	}
+	
+	@Transactional
+	
+	public boolean addBlog(Blog blog) 
+	{
+		try
 		{
-			this.sessionFactory = sessionFactory;
-			log.info("Connection Established Successfully");
-		} 
-		catch (Exception ex) 
+		sessionFactory.getCurrentSession().save(blog);
+		return true;
+		}
+		catch(Exception e)
 		{
-			log.error("Failed to establish connection");
-			ex.printStackTrace();
+		System.out.println(e);
+		return false;
 		}
 	}
-	@Transactional
-	public boolean addBlog(Blog blog) {
-		log.info("Add Blog Method Started");
+
+	public boolean updateBlog(Blog blog) {
+		
 		try
 		{
 			sessionFactory.getCurrentSession().saveOrUpdate(blog);
-			log.info("Add blog Method Success");
 			return true;
 		}
-		catch(Exception ex)
+		catch(Exception e)
 		{
-			log.error("Add blog has an Error");
-			ex.printStackTrace();
+			System.out.println("Exception has occured..........."+e);
 			return false;
 		}
+		
 	}
+
 	@Transactional
-	public boolean updateBlog(Blog blog) {
-		log.info("Update Blog method Started");
-		try
-		{
-			log.info("Update blog Success");
-			sessionFactory.getCurrentSession().update(blog);
-			return true;
-		}
-		catch(Exception ex)
-		{
-			log.info("Update Blog Unsuccessful");
-			ex.printStackTrace();
-			return false;
-		}
-	}
-	@Transactional
+	
 	public boolean deleteBlog(Blog blog) {
-		log.info("Delete Blog method Started");
 		try
 		{
-			log.info("Delete blog Success");
 			sessionFactory.getCurrentSession().delete(blog);
 			return true;
 		}
-		catch(Exception ex)
+		catch(Exception e)
 		{
-			log.info("Delete Blog Unsuccessful");
-			ex.printStackTrace();
+			System.out.println("Exception has occured..........."+e);
 			return false;
 		}
+		
 	}
-	@Transactional
-	public Blog getBlog(String title) {
-		log.debug("Starting of Method Get Blog "+title);
+
+	
+	public Blog getBlogDao(int blogId) {
+		Session session=sessionFactory.openSession();
+		Blog blog =(Blog)session.get(Blog.class,blogId);
+		session.close();
+		return blog;
+	}
+
+	
+	public List<Blog> getAllBlogs() {
+		Session session=sessionFactory.openSession();
+		List<Blog> blogList =(List<Blog>)session.createQuery("from Blog");
+		session.close();
+		return blogList;
+	}
+
+	
+	public boolean approveBlog(Blog blog) {
 		try
 		{
-			Blog blog =  sessionFactory.getCurrentSession().get(Blog.class, title);
-			blog.setErrorCode("200");
-			blog.setErrorMsg("User Found");
-			return blog;
-		}
-		catch(Exception ex)
+			blog.setStatus("A");
+			sessionFactory.getCurrentSession().update(blog);	
+		    return true;
+	    }
+        catch(Exception e)
 		{
-			UserDet user = new UserDet();
-			ex.printStackTrace();
-			user.setErrorCode("404");
-			user.setErrorMsg("User Not Found");
-			return null;
+        	System.out.println("Exception has occured"+e);
+        	return false;
 		}
+   }		
+	
+	
+	public boolean rejectBlog(Blog blog) {
+		try
+		{
+			blog.setStatus("N");
+			sessionFactory.getCurrentSession().update(blog);	
+		    return true;
+	    }
+        catch(Exception e)
+		{
+        	System.out.println("Exception has occured"+e);
+        	return false;
+		}
+   }
+
+	public boolean addBlog(com.niit.Backend.Dao.BlogDao blog) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	@Transactional
-	public List<Blog> getBlogByUser(String username) {
+
+	public boolean updateBlog(com.niit.Backend.Dao.BlogDao blog) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean deleteBlog(com.niit.Backend.Dao.BlogDao blog) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public com.niit.Backend.Dao.BlogDao getBlogDao(int blogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Transactional
-	public List<Blog> getAllBlogs() {
-		log.info("Starting of List Method");
-		String hql_string = "FROM Blog";
-		Query query = sessionFactory.getCurrentSession().createQuery(hql_string);
-		log.info("List Retrieved");
-		return query.list();
+
+	public boolean approveBlog(com.niit.Backend.Dao.BlogDao blog) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
+	public boolean rejectBlog(com.niit.Backend.Dao.BlogDao blog) {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
+	public Blog getBlog(int blogId) {
+		// TODO Auto-generated method stub
+		return null;
+	}		
+	
+	
+}

@@ -1,72 +1,97 @@
 package com.niit.Backend.TestCases;
+import static org.junit.Assert.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.Backend.Dao.ForumDao;
 import com.niit.Backend.Model.Forum;
 
-public class ForumTestCases 
-{
-	Logger log = LoggerFactory.getLogger(ForumTestCases.class);
+
+
+public class ForumTestCases {
+
+	static ForumDao forumDAO;
 	
-	@Autowired
-	ForumDao forumDAO;
-	
-	@Autowired
-	Forum forum;
-	
-	@Autowired
-	AnnotationConfigApplicationContext context;
-	
-	public ForumTestCases()
+	@BeforeClass
+	public static void initialize()
 	{
-		
-		context = new AnnotationConfigApplicationContext();
+		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
 		context.scan("com.raaji.CollaborationProject");
 		context.refresh();
-
-		forumDAO = (ForumDao) context.getBean("forumDAO");
-		forum = (Forum) context.getBean("forum");
 		
+		forumDAO=(ForumDao)context.getBean("forumDAO");
 	}
-   public void forumAdd()
-   {
-	   log.info("Add forum Test started");
-	  
-	   forum.setDescription("Here it contains username title and some other details...");
-	   forum.setUsername("sharanya");
-	   forum.setForum_title("Fresher_Gradguate");
-	   forum.setDate_time("DATE_TIME");
-	   
-	   forumDAO.addForum(forum);
-	   log.info("Add Forum Test end");
-   }
-   public void UpdateForum()
-  	{
-  		log.info("Update Success initiated.");
-  		forum = forumDAO.getForum("testForum");
-  		forumDAO.updateForum(forum);
-  		log.info("Update Success");
-  	}
-   public void deleteForum()
+	
+	@Test
+	public void addBlogTest()
 	{
-		log.info("Delete Success initiated.");
-		forum = forumDAO.getForum("testForum");
-		forumDAO.deleteForum(forum);
-		log.info("Delete Success");
-	}
-   public static void main(String[] args) 
-	{
-	   ForumTestCases tforum = new  ForumTestCases ();
-//		tforum.blogAdd();
-	   tforum.UpdateForum();
-//		tforum.deleteForum();
-//		tforum.list();
+		Forum forum=new Forum();
 		
-		System.out.println("Success");
+		forum.setForumId(1017);
+		forum.setForumName("Java");
+		forum.setForumContent("It contains simple java Concept");
+		forum.setUsername("papanaboina");
+		forum.setStatus("A");
+	    forum.setCreateDate(new java.util.Date());;
+		
+		assertTrue("Problem in Inserting Forum",forumDAO.addForum(forum));
+	
 	}
-   
+    /*
+	@Test
+	public void getForumTest()
+	{
+		ForumPart forum=forumDAO.getForum(1016);
+        assertNotNull("forum not found",forum);
+        
+        System.out.println("Forum Name is:"+forum.getForumName());
+        System.out.println("Forum Content is:"+forum.getForumContent());
+	}
+	
+	@Test
+	public void getAllForumTest()
+	{
+		List<ForumPart> forum=(List<forumDAO>).getAllForums();
+        assertNotNull("forum list not found",forumList.get(0));
+        
+        for(ForumPart forum:forumList)
+        {
+        System.out.println("Forum Id"+forum.getForumId()+"-----"+"Forum Name"+forum.getForumName());
+	    }
+     }
+	
+	@Test
+	public void deleteForumTest()
+	{
+		ForumPart forum=(ForumPart)forumDAO.getforum(2017);
+		assertTrue("Problem in deletion",forumDAO.deleteForum(forum));
+	}
+	
+	@Test
+	public void updateForumTest()
+	{
+		ForumPart forum=(ForumPart)forumDAO.getforum(1016);
+		forum.setForumContent("Features of java, variables, collections ,Multithreading, Strings ");
+        forum.setForumName("Core java");
+        assertTrue("Problem in updation", forumDAO.updateForum(forum));
+	}
+	
+	@Test
+	public void approveForumTest()
+	{
+		ForumPart forum=(ForumPart)forumDAO.getForum(1016);
+	    assertTrue("Problem in updation",forumDAO.updateForum(forum));
+	}
+	
+	@Test
+	public void rejectForumTest()
+	{
+		ForumPart forum=(ForumPart)forumDAO.getForum(1016);
+	    assertTrue("Problem in updation",forumDAO.rejectForum(forum));
+	}*/
+	
 }

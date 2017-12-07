@@ -1,51 +1,61 @@
 package com.niit.Backend.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import org.springframework.stereotype.Component;
+import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 @Entity
-@Table(name = "C_BLOG")
-@Component
-public class Blog extends ErrorDomain
+@Table
+public class Blog
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int blog_id;
-	private String blog_title;
-	@Lob
-	private String description;
-	private String username;
-	private String status;
-	private String date_time;
-	@Lob
-	private String rejected;
-	public int getBlog_id() {
-		return blog_id;
+	int blogId;
+	
+	String blogName;
+	String blogContent;
+	String username;
+	String status;
+	int likes;
+	
+	Date createDate;
+	
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setBlog_id(int blog_id) {
-		this.blog_id = blog_id;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
-	public String getBlog_title() {
-		return blog_title;
+	public int getBlogId() 
+	{
+		return blogId;
 	}
-	public void setBlog_title(String blog_title) {
-		this.blog_title = blog_title;
+	public void setBlogId(int blogId) 
+	{
+		this.blogId = blogId;
 	}
-	public String getDescription() {
-		return description;
+	public String getBlogName() 
+	{
+		return blogName;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setBlogName(String blogName) 
+	{
+		this.blogName = blogName;
 	}
-	public String getUsername() {
+	public String getBlogContent() 
+	{
+		return blogContent;
+	}
+	public void setBlogContent(String blogContent) 
+	{
+		this.blogContent = blogContent;
+	}
+	public String getUsername() 
+	{
 		return username;
 	}
-	public void setUsername(String username) {
+	public void setUsername(String username) 
+	{
 		this.username = username;
 	}
 	public String getStatus() {
@@ -54,20 +64,13 @@ public class Blog extends ErrorDomain
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getDate_time() {
-		return date_time;
+	public int getLikes() {
+		return likes;
 	}
-	public void setDate_time(String date_time) {
-		this.date_time = date_time;
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
-	public String getRejected() {
-		return rejected;
-	}
-	public void setRejected(String rejected) {
-		this.rejected = rejected;
-	}
-	public Object getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
+	
 }
