@@ -1,5 +1,7 @@
 package com.niit.Backend.DaoImpl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +85,16 @@ public class UserDaoImpl implements UserDao
 	}
 */
 	public UserDet getUser(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean checkLogin(UserDet userPart) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public List<UserDet> getAllUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}	
