@@ -20,7 +20,7 @@ static UserDao userDAO;
 	public static void initialize()
 	{
 		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
-		context.scan("com.raaji.CollaborationProject");
+		context.scan("com.niit.Backend");
 		context.refresh();
 		
 		userDAO=(UserDao)context.getBean("userDAO");
@@ -32,21 +32,21 @@ static UserDao userDAO;
 	public void addUserTest()
 	{
 		UserDet user=new UserDet();
-		 user.setUsername("Raaji");
-		 user.setFirstname("Raaji");
-		 user.setLastname("Papanaboina");
+		 user.setUsername("sharanya");
+		 user.setFirstname("sharanya");
+		 user.setLastname("palaparthi");
 		 user.setPassword("0675");
-		 user.setEmailId("rajipapanaboina@gmail.com");
+		 user.setEmailId("sharanya.palaparthi@gmail.com");
 		 user.setRole("Admin");
 		 user.setIsOnline("N");
-		assertTrue("Problem in Inserting User",userDAO.addUserDao(user));
+		assertTrue("Problem in Inserting User",userDAO.addUser(user));
 	
 	}
 	
 	@Test
 	public void isOnlineTest()
 	{
-		UserDao user=userDAO.getUserDao("Raaji");
+		UserDet user=userDAO.getUser("sharanya");
 		assertTrue("Problem in assertion..",userDAO.updateOnlineStatus("Y", user));
 	}
 

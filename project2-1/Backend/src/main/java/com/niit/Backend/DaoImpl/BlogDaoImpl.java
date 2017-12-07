@@ -70,7 +70,7 @@ public class BlogDaoImpl implements BlogDao
 	}
 
 	
-	public Blog getBlogDao(int blogId) {
+	public Blog getBlog(int blogId) {
 		Session session=sessionFactory.openSession();
 		Blog blog =(Blog)session.get(Blog.class,blogId);
 		session.close();
@@ -145,10 +145,10 @@ public class BlogDaoImpl implements BlogDao
 		return false;
 	}
 
-	public Blog getBlog(int blogId) {
+	/*public Blog getBlog(int blogId) {
 		// TODO Auto-generated method stub
 		return null;
 	}		
-	
+	*/
 	
 }

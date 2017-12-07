@@ -72,7 +72,7 @@ public class UserDaoImpl implements UserDao
 		return null;
 	}
 
-	public UserDet getUserDao(String username) {
+	/*public UserDet getUserDao(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,7 +81,7 @@ public class UserDaoImpl implements UserDao
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+*/
 	public UserDet getUser(String username) {
 		// TODO Auto-generated method stub
 		return null;
