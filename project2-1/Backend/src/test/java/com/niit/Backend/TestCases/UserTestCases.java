@@ -1,53 +1,118 @@
 package com.niit.Backend.TestCases;
 
-import static org.junit.Assert.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
-import org.hibernate.Session;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Repository;
 
 import com.niit.Backend.Dao.UserDao;
 import com.niit.Backend.Model.UserDet;
 
-@Repository("userDAO")
-public class UserTestCases {
 
-static UserDao userDAO;
+public class UserTestCases 
+{
+	Logger log = LoggerFactory.getLogger(UserTestCases.class);
 	
-	@BeforeClass
-	public static void initialize()
+	@Autowired
+	UserDao userDAO;
+	
+	@Autowired
+	UserDet user;
+	
+	@Autowired
+	AnnotationConfigApplicationContext context;
+	
+	public UserTestCases()
 	{
-		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
-		context.scan("com.niit.Backend");
-		context.refresh();
 		
-		userDAO=(UserDao)context.getBean("userDAO");
-	}
-	
-	
+		context = new AnnotationConfigApplicationContext();
+		context.scan("com.niit.collaboration");
+		context.refresh();
 
-	@Test
-	public void addUserTest()
-	{
-		UserDet user=new UserDet();
-		 user.setUsername("sharanya");
-		 user.setFirstname("sharanya");
-		 user.setLastname("palaparthi");
-		 user.setPassword("0675");
-		 user.setEmailId("sharanya.palaparthi@gmail.com");
-		 user.setRole("Admin");
-		 user.setIsOnline("N");
-		assertTrue("Problem in Inserting User",userDAO.addUser(user));
-	
+		userDAO = (UserDao) context.getBean("userDAO");
+		user = (UserDet) context.getBean("user");
+		
 	}
 	
-	@Test
-	public void isOnlineTest()
+	public void testAdd()
 	{
-		UserDet user=userDAO.getUser("sharanya");
-		assertTrue("Problem in assertion..",userDAO.updateOnlineStatus("Y", user));
+		log.info("Add User Test started");
+		
+		user.setUsername("srinu");
+		user.setFirst_name("srinu");
+		user.setLast_name("");
+		user.setDob(new Date());
+		user.setGender('M');
+		user.setMail_id("srinu@gmail.com");
+		user.setPassword("srinu");
+		user.setStatus('N');
+		user.setRole("ADMIN");
+		
+		userDAO.addUser(user);
+		log.info("Add User Test end");
 	}
-
+	
+	public void getUserDetails()
+	{
+		log.info("Get User Details Started");
+		String userName = "SRINU";
+		user = userDAO.getUser(userName);
+		System.out.println("Name - "+user.getFirst_name());
+		System.out.println("Date - "+user.getDob());
+		DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+	       Date dateobj = user.getDob();
+	       String datetime = df.format(dateobj).toString();
+	       System.out.println("Date - "+datetime);
+		log.info("Get User Ended");
+	}
+	
+	public void validateUser()
+	{
+		log.info("Validate User Started");
+		String userName = "testuser";
+		String password = "student";
+		boolean value = userDAO.validateUser(userName, password);
+		if(value)
+			System.out.println("Valid");
+		else
+			System.out.println("Invalid");
+		log.info("Validate User Ended");
+	}
+	
+	public void deleteUser()
+	{
+		log.info("Delete Success initiated.");
+		user = userDAO.getUser("testuser");
+		userDAO.deleteUser(user);
+		log.info("Delete Success");
+	}
+	
+	public void list()
+	{
+		log.info("List Users");
+		List<UserDet> list = userDAO.getUserList();
+		int size = list.size(); 
+		for(int index = 0; index < size; index++)
+		{
+			System.out.print("Name = "+list.get(index).getFirst_name());
+			System.out.println("\t Email = "+list.get(index).getMail_id());
+		}
+	}
+	
+	public static void main(String[] args) 
+	{
+		UserTestCases tuser = new UserTestCases();
+		tuser.testAdd();
+//		tuser.getUserDetails();
+//		tuser.validateUser();
+//		tuser.deleteUser();
+		//tuser.list();
+		
+		System.out.println("Success");
+	}
 }

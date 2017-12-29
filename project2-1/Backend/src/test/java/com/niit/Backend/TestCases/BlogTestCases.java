@@ -1,96 +1,163 @@
 package com.niit.Backend.TestCases;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.Backend.Dao.BlogDao;
 import com.niit.Backend.Model.Blog;
 
-public class BlogTestCases {
 
-	static BlogDao blogDAO;
+public class BlogTestCases
+{
+Logger log = LoggerFactory.getLogger(UserTestCases.class);
 	
-	@BeforeClass
-	public static void initialize()
-	{
-		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
-		context.scan("com.raaji.CollaborationProject");
+	@Autowired
+	BlogDao blogDAO;
+	
+	@Autowired
+	Blog blog;
+	
+	@Autowired
+	AnnotationConfigApplicationContext context;
+	
+	public BlogTestCases()
+	{	
+		context = new AnnotationConfigApplicationContext();
+		context.scan("com.niit.collaboration");
 		context.refresh();
-		
-		blogDAO=(BlogDao)context.getBean("blogDAO");
-	}
-	
-	@Test
-	public void addBlogTest()
-	{
-		Blog blog=new Blog();
-		
-		blog.setBlogId(2017);
-		blog.setBlogName("C");
-		blog.setBlogContent("It contains simple C Concept");
-		blog.setUsername("raaji");
-		blog.setStatus("A");
-		blog.setLikes(6);
-		blog.setCreateDate(new java.util.Date());;
-		
-		assertTrue("Problem in Inserting Blog",blogDAO.addBlog(blog));
-	
-	}
 
-	@Test
-	public void getBlogTest()
-	{
-		Blog blog=blogDAO.getBlog(2016);
-        assertNotNull("blog not found",blog);
-        
-        System.out.println("Blog Name is:"+blog.getBlogName());
-        System.out.println("Blog Content is:"+blog.getBlogContent());
-	}
-	/*@Ignore
-	@Test
-	public void getAllBlogTest()
-	{
-		List<BlogPart> blog=(List<blogDAO>).getAllBlogs();
-        assertNotNull("blog list not found",blogList.get(0));
-        
-        for(BlogPart blog:blogList)
-        {
-        System.out.println("Blog Id"+blog.getBlogId()+"-----"+"Bolg Name"+blog.getBlogName());
-	    }
-     }*/
-	
-	@Test
-	public void deleteBlogTest()
-	{
-		Blog blog=(Blog)blogDAO.getBlog(2017);
-		assertTrue("Problem in deletion",blogDAO.deleteBlog(blog));
+		blogDAO = (BlogDao) context.getBean("blogDAO");
+		blog = (Blog) context.getBean("blog");
 	}
 	
-	@Test
-	public void updateBlogTest()
+	public void addBlog()
 	{
-		Blog blog=(Blog)blogDAO.getBlog(2016);
-		blog.setBlogContent("Features of C, Storage variables,Looping, Files ,Data Structure");
-        blog.setBlogName("C++");
-        assertTrue("Problem in updation",blogDAO.updateBlog(blog));
+		blog.setBlog_title("N th Blog");
+		blog.setDescription("Hello");
+		blog.setUsername("testdone");
+		blog.setDate_time("DATE_TIME");
+		blogDAO.addBlog(blog);
+		System.out.println("Success?");
 	}
 	
-	@Test
-	public void approveBlogTest()
+	public void updateBlog()
 	{
-		Blog blog=(Blog)blogDAO.getBlog(2016);
-	    assertTrue("Problem in updation",blogDAO.updateBlog(blog));
+		blog.setBlog_title("Second Blog");
+		blog.setDescription("Hello");
+		blog.setUsername("Admin");
+		blog.setDate_time("DATE_TIME");
+		blogDAO.updateBlog(blog);
+		System.out.println("Update Success");
 	}
 	
-	@Test
-	public void rejectBlogTest()
+	public void approveBlog()
 	{
-		Blog blog=(Blog)blogDAO.getBlog(2016);
-	    assertTrue("Problem in updation",blogDAO.rejectBlog(blog));
+		blog.setBlog_title("Second Blog");
+		blog.setDescription("Hello");
+		blog.setUsername("Admin");
+		blog.setDate_time("DATE_TIME");
+		blog.setStatus("Approved");
+		blogDAO.approveBlog(blog);
+		System.out.println("Approved Success");
+	}
+	
+	public void getBlog()
+	{
+		blog = blogDAO.getBlog("First Blog");
+		if(blog == null)
+		{
+			System.out.println("Blog not found");
+		}	else
+		{
+			System.out.println("Blog");
+			System.out.println("Name = "+blog.getBlog_id());
+			System.out.println("Details = "+blog.getStatus());
+		}
+	}
+	
+	public void deleteBlog()
+	{
+		blog = blogDAO.getBlog("N th Blog");
+		boolean value = blogDAO.deleteBlog(blog);
+		if(value==true)
+		{
+			System.out.println("Blog deleted");
+		} else
+		{
+			System.out.println("Blog not deleted");
+		}
+	}
+	
+	public void getByUser()
+	{
+		String usn = "testuser";
+		List<Blog> list = blogDAO.getBlogByUser(usn);
+		if(list == null)
+		{
+			System.out.println("List is Empty");
+		}
+		else
+		{
+			int size = blogDAO.getBlogByUser(usn).size();
+			for(int i=0; i<size; i++)
+			{
+				System.out.print("Title = "+list.get(i).getBlog_title()+"\t");
+				System.out.println("Status = "+list.get(i).getStatus());
+			}
+		}
+	}
+	
+	public void getAll()
+	{
+		List<Blog> list = blogDAO.getAllBlogs();
+		if(list == null)
+		{
+			System.out.println("List is Empty");
+		}
+		else
+		{
+			int size = blogDAO.getAllBlogs().size();
+			for(int i=0; i<size; i++)
+			{
+				System.out.print("Title = "+list.get(i).getBlog_title()+"\t");
+				System.out.println("Status = "+list.get(i).getStatus());
+			}
+		}
+	}
+	
+	public void getApprovedBlog()
+	{
+		List<Blog> list = blogDAO.getApprovedBlogs();
+		if(list == null)
+		{
+			System.out.println("List is Empty");
+		}
+		else
+		{
+			int size = blogDAO.getApprovedBlogs().size();
+			for(int i=0; i<size; i++)
+			{
+				System.out.print("Title = "+list.get(i).getBlog_title()+"\t");
+				System.out.println("Status = "+list.get(i).getStatus());
+			}
+		}
+	}
+	
+	public static void main(String[] args) 
+	{
+		BlogTestCases tb = new BlogTestCases();
+	//tb.addBlog();
+		tb.getAll();
+//		tb.approveBlog();
+//		tb.updateBlog();	
+	//	tb.getBlog();
+//		tb.deleteBlog();
+//		tb.getByUser();
+//		tb.getApprovedBlog();
+		System.out.println("Success");
 	}
 }

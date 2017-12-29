@@ -45,7 +45,7 @@ public class ForumTestCases {
 	@Test
 	public void getForumTest()
 	{
-		ForumPart forum=forumDAO.getForum(1016);
+		Forum forum=forumDAO.getForum(1016);
         assertNotNull("forum not found",forum);
         
         System.out.println("Forum Name is:"+forum.getForumName());
@@ -55,10 +55,10 @@ public class ForumTestCases {
 	@Test
 	public void getAllForumTest()
 	{
-		List<ForumPart> forum=(List<forumDAO>).getAllForums();
+		List<Forum> forum=(List<forumDAO>).getAllForums();
         assertNotNull("forum list not found",forumList.get(0));
         
-        for(ForumPart forum:forumList)
+        for(Forum forum:forumList)
         {
         System.out.println("Forum Id"+forum.getForumId()+"-----"+"Forum Name"+forum.getForumName());
 	    }
@@ -67,14 +67,14 @@ public class ForumTestCases {
 	@Test
 	public void deleteForumTest()
 	{
-		ForumPart forum=(ForumPart)forumDAO.getforum(2017);
+		Forum forum=(Forum)forumDAO.getforum(2017);
 		assertTrue("Problem in deletion",forumDAO.deleteForum(forum));
 	}
 	
 	@Test
 	public void updateForumTest()
 	{
-		ForumPart forum=(ForumPart)forumDAO.getforum(1016);
+		Forum forum=(Forum)forumDAO.getforum(1016);
 		forum.setForumContent("Features of java, variables, collections ,Multithreading, Strings ");
         forum.setForumName("Core java");
         assertTrue("Problem in updation", forumDAO.updateForum(forum));
@@ -83,14 +83,14 @@ public class ForumTestCases {
 	@Test
 	public void approveForumTest()
 	{
-		ForumPart forum=(ForumPart)forumDAO.getForum(1016);
+		Forum forum=(Forum)forumDAO.getForum(1016);
 	    assertTrue("Problem in updation",forumDAO.updateForum(forum));
 	}
 	
 	@Test
 	public void rejectForumTest()
 	{
-		ForumPart forum=(ForumPart)forumDAO.getForum(1016);
+		Forum forum=(Forum)forumDAO.getForum(1016);
 	    assertTrue("Problem in updation",forumDAO.rejectForum(forum));
 	}*/
 	
