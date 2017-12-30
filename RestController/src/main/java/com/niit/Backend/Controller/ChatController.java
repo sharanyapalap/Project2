@@ -1,16 +1,16 @@
-package com.niit.Backend.RestController;
+package com.niit.Backend.Controller;
 
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import org.springframework.messaging.handler.annotation.MessageMapping;
-//import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.niit.RestController.chat.Message;
-import com.niit.RestController.chat.MessageOutput;
+import com.niit.Backend.chat.Message;
+import com.niit.Backend.chat.MessageOutput;
 
 @Controller
 @RequestMapping("/")

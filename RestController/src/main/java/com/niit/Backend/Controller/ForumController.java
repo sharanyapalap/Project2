@@ -1,4 +1,4 @@
-package com.niit.Backend.RestController;
+package com.niit.Backend.Controller;
 
 import java.util.List;
 
@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niit.Backend.ControllerUtil.Date_Time;
 import com.niit.Backend.Dao.ForumDao;
 import com.niit.Backend.Model.Forum;
-import com.niit.Backend.util.Date_Time;
+
 
 @RestController
 public class ForumController 

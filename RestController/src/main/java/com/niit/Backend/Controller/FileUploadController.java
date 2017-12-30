@@ -1,4 +1,4 @@
-package com.niit.Backend.RestController;
+package com.niit.Backend.Controller;
 
 import java.io.File;
 import java.io.FileOutputStream;

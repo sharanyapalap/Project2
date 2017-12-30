@@ -26,7 +26,7 @@ public class ForumTestCases {
 		forumDAO=(ForumDao)context.getBean("forumDAO");
 	}
 	
-	@Test
+	/*@Test
 	public void addBlogTest()
 	{
 		Forum forum=new Forum();

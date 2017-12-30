@@ -1,4 +1,4 @@
-package com.niit.RestController.util;
+package com.niit.Backend.ControllerUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;

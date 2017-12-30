@@ -1,4 +1,4 @@
-package com.niit.Backend.RestController;
+package com.niit.Backend.Controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niit.Backend.ControllerUtil.Date_Time;
 import com.niit.Backend.Dao.FriendDao;
 import com.niit.Backend.Dao.UserDao;
 import com.niit.Backend.Model.UserDet;
-import com.niit.Backend.util.Date_Time;
+
 
 
 @RestController

@@ -1,4 +1,4 @@
-package com.niit.RestController.chat;
+package com.niit.Backend.chat;
 
 public class Message
 {
