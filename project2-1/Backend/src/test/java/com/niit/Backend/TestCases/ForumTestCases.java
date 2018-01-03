@@ -20,7 +20,7 @@ public class ForumTestCases {
 	public static void initialize()
 	{
 		AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext();
-		context.scan("com.raaji.CollaborationProject");
+		context.scan("com.niit.Backend");
 		context.refresh();
 		
 		forumDAO=(ForumDao)context.getBean("forumDAO");

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.Backend.Dao.UserDao;
-import com.niit.Backend.Model.UserDet;
+import com.niit.Backend.Model.User;
 
 @SuppressWarnings("deprecation")
 @Repository("userDAO")
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao
 	}
 	
 	@Transactional
-	public boolean addUser(UserDet user) 
+	public boolean addUser(User user) 
 	{
 		log.info("Add User Method Started");
 		try
@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao
 		log.info("Validate User Method Started");
 		try
 		{
-			UserDet user =  sessionFactory.getCurrentSession().get(UserDet.class, userName);
+			User user =  sessionFactory.getCurrentSession().get(User.class, userName);
 			if(user.getPassword().equals(password))
 			{
 				user.setErrorCode("200");
@@ -79,7 +79,7 @@ public class UserDaoImpl implements UserDao
 			}
 		} catch(Exception ex)
 		{
-			UserDet user = new UserDet();
+			User user = new User();
 			user.setErrorCode("100");
 			user.setErrorMsg("Username not found");
 			log.error("Username Not found in database");
@@ -88,19 +88,19 @@ public class UserDaoImpl implements UserDao
 	}
 
 	@Transactional
-	public UserDet getUser(String userName) 
+	public User getUser(String userName) 
 	{
 		log.debug("Starting of Method Get User "+userName);
 		try
 		{
-			UserDet user =  sessionFactory.getCurrentSession().get(UserDet.class, userName);
+			User user =  sessionFactory.getCurrentSession().get(User.class, userName);
 			user.setErrorCode("200");
 			user.setErrorMsg("User Found");
 			return user;
 		}
 		catch(Exception ex)
 		{
-			UserDet user = new UserDet();
+			User user = new User();
 			ex.printStackTrace();
 			user.setErrorCode("404");
 			user.setErrorMsg("User Not Found");
@@ -110,7 +110,7 @@ public class UserDaoImpl implements UserDao
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
-	public List<UserDet> getUserList() 
+	public List<User> getUserList() 
 	{
 		log.info("Starting of List Method");
 		String hql_string = "FROM User";
@@ -120,7 +120,7 @@ public class UserDaoImpl implements UserDao
 	}
 
 	@Transactional
-	public boolean deleteUser(UserDet user) 
+	public boolean deleteUser(User user) 
 	{
 		log.info("Delete User method Started");
 		try

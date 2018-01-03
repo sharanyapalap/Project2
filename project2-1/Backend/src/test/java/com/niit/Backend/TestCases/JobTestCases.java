@@ -11,10 +11,6 @@ import com.niit.Backend.Dao.JobDao;
 import com.niit.Backend.Model.Job;
 import com.niit.Backend.util.Date_Time;
 
-/*import com.niit.collaboration.DAO.JobDAO;
-import com.niit.collaboration.model.Job;
-import com.niit.collaboration.util.Date_Time;
-*/
 public class JobTestCases 
 {
 	Logger log = LoggerFactory.getLogger(JobTestCases.class);
@@ -31,7 +27,7 @@ public class JobTestCases
 	public JobTestCases()
 	{	
 		context = new AnnotationConfigApplicationContext();
-		context.scan("com.niit.collaboration");
+		context.scan("com.niit.Backend");
 		context.refresh();
 
 		jobDAO = (JobDao) context.getBean("jobDAO");

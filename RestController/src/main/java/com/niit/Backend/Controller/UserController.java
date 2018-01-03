@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niit.Backend.ControllerUtil.Date_Time;
 import com.niit.Backend.Dao.FriendDao;
 import com.niit.Backend.Dao.UserDao;
-import com.niit.Backend.Model.UserDet;
+import com.niit.Backend.Model.User;
 
 
 
@@ -35,15 +35,15 @@ public class UserController
 	private FriendDao friendDAO;
 
 	@Autowired
-	private UserDet user;
+	private User user;
 
 	@Autowired
 	HttpSession session;
 
 	@GetMapping("/getUserList")
-	public ResponseEntity<List<UserDet>> getUserList() throws NullPointerException
+	public ResponseEntity<List<User>> getUserList() throws NullPointerException
 	{
-			List<UserDet> list = userDAO.getUserList();
+			List<User> list = userDAO.getUserList();
 			if (list.isEmpty()) 
 			{
 				user.setErrorCode("100");
@@ -52,7 +52,7 @@ public class UserController
 			else
 			{
 				DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-				for(UserDet user : list)
+				for(User user : list)
 				{
 					user.setErrorCode("200");
 					user.setErrorMsg("Success");
@@ -60,25 +60,25 @@ public class UserController
 						user.setBirthdate(df.format(user.getDob()));
 				}
 			}
-			return new ResponseEntity<List<UserDet>>(list, HttpStatus.OK);
+			return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("/getUser-{id}")
-	public ResponseEntity<UserDet> getUser(@PathVariable("id") String userName) {
+	public ResponseEntity<User> getUser(@PathVariable("id") String userName) {
 		user = userDAO.getUser(userName);
 
 		if (user == null) {
-			user = new UserDet();
+			user = new User();
 			user.setErrorCode("404");
 			user.setErrorMsg("User " + userName + " is not found.");
 		}
 		user.setErrorCode("200");
 		user.setErrorMsg("User " + userName + " is found.");
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<UserDet> validateUser(@RequestBody UserDet user) 
+	public ResponseEntity<User> validateUser(@RequestBody User user) 
 	{
 		System.out.println("Name - "+user.getUsername());
 //		System.out.println("Password "+user.getPassword());
@@ -86,7 +86,7 @@ public class UserController
 		System.out.println(value);
 		if (value == false) 
 		{
-			user = new UserDet();
+			user = new User();
 			user.setErrorCode("404");
 			user.setErrorMsg("Wrong username or password.");
 		}
@@ -94,13 +94,13 @@ public class UserController
 		{
 			if(user.getStatus()=='R')
 			{
-				user = new UserDet();
+				user = new User();
 				user.setErrorCode("404");
 				user.setErrorMsg("Registeration is rejected. Please Contact Admin");
 			}
 			if(user.getStatus()=='N')
 			{
-				user = new UserDet();
+				user = new User();
 				user.setErrorCode("404");
 				user.setErrorMsg("Registeration approval is pending. Please try again later");
 			}
@@ -125,11 +125,11 @@ public class UserController
 			}
 		}
 
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PostMapping("/add_User")
-	public ResponseEntity<UserDet> addUser(@RequestBody UserDet user) 
+	public ResponseEntity<User> addUser(@RequestBody User user) 
 	{	    
 	    user.setStatus('N');
 	    user.setIsOnline('N');
@@ -144,11 +144,11 @@ public class UserController
 			user.setErrorCode("100");
 			user.setErrorMsg("Add User Failed");
 		}
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PostMapping("/updateUser")
-	public ResponseEntity<UserDet> updateUser(@RequestBody UserDet user)
+	public ResponseEntity<User> updateUser(@RequestBody User user)
 	{
 		if(user != null)
 		{
@@ -165,15 +165,15 @@ public class UserController
 				return null;
 			}
 		}
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@GetMapping("/delete_user-{id}")
-	public ResponseEntity<UserDet> deleteUser(@PathVariable("id") String userName) 
+	public ResponseEntity<User> deleteUser(@PathVariable("id") String userName) 
 	{
-		UserDet user = userDAO.getUser(userName);
+		User user = userDAO.getUser(userName);
 		boolean value = userDAO.deleteUser(user);
-		user = new UserDet();
+		user = new User();
 		if (value == true) 
 		{
 			user.setErrorCode("200");
@@ -184,11 +184,11 @@ public class UserController
 			user.setErrorCode("100");
 			user.setErrorMsg("Delete User Failed");
 		}
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	@GetMapping("/logout")
-	public ResponseEntity<UserDet> logout()
+	public ResponseEntity<User> logout()
 	{
 		log.info("isLoggedIN - "+session.getAttribute("isLoggedIn"));
 		if(session.getAttribute("isLoggedIn") != null)
@@ -199,18 +199,18 @@ public class UserController
 			user.setLast_seen(dt.getDateTime());
 			userDAO.addUser(user);
 			friendDAO.setUsersOffline(session.getAttribute("username").toString());
-			user = new UserDet();
+			user = new User();
 			user.setErrorCode("200");
 			user.setErrorMsg("You have logged out.");
 			session.invalidate();
 		}
 		else
 		{
-			user = new UserDet();
+			user = new User();
 			user.setErrorCode("500");
 			user.setErrorMsg("You have not logged in");
 			log.info(user.getErrorMsg());
 		}
-		return new ResponseEntity<UserDet>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 }

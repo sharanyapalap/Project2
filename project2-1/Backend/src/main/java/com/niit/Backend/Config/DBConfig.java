@@ -23,7 +23,8 @@ import com.niit.Backend.Model.ForumReply;
 import com.niit.Backend.Model.Friend;
 import com.niit.Backend.Model.Job;
 import com.niit.Backend.Model.JobApplied;
-import com.niit.Backend.Model.UserDet;
+import com.niit.Backend.Model.User;
+
 
 
 @Configuration
@@ -62,7 +63,7 @@ public class DBConfig
 			LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 			
 			sessionBuilder.addProperties(getHibernateProperties());
-			sessionBuilder.addAnnotatedClass(UserDet.class);
+			sessionBuilder.addAnnotatedClass(User.class);
 			sessionBuilder.addAnnotatedClass(Blog.class);
 			sessionBuilder.addAnnotatedClass(Job.class);
 			sessionBuilder.addAnnotatedClass(JobApplied.class);

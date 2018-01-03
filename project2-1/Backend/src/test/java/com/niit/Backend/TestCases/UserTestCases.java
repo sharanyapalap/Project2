@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.Backend.Dao.UserDao;
-import com.niit.Backend.Model.UserDet;
+import com.niit.Backend.Model.User;
 
 
 public class UserTestCases 
@@ -22,7 +22,7 @@ public class UserTestCases
 	UserDao userDAO;
 	
 	@Autowired
-	UserDet user;
+	User user;
 	
 	@Autowired
 	AnnotationConfigApplicationContext context;
@@ -31,11 +31,11 @@ public class UserTestCases
 	{
 		
 		context = new AnnotationConfigApplicationContext();
-		context.scan("com.niit.collaboration");
+		context.scan("com.niit.Backend");
 		context.refresh();
 
 		userDAO = (UserDao) context.getBean("userDAO");
-		user = (UserDet) context.getBean("user");
+		user = (User) context.getBean("user");
 		
 	}
 	
@@ -43,13 +43,13 @@ public class UserTestCases
 	{
 		log.info("Add User Test started");
 		
-		user.setUsername("srinu");
-		user.setFirst_name("srinu");
+		user.setUsername("sharanya");
+		user.setFirst_name("sharanya");
 		user.setLast_name("");
 		user.setDob(new Date());
 		user.setGender('M');
-		user.setMail_id("srinu@gmail.com");
-		user.setPassword("srinu");
+		user.setMail_id("sharanya.palaparthi@gmail.com");
+		user.setPassword("sharanya");
 		user.setStatus('N');
 		user.setRole("ADMIN");
 		
@@ -60,7 +60,7 @@ public class UserTestCases
 	public void getUserDetails()
 	{
 		log.info("Get User Details Started");
-		String userName = "SRINU";
+		String userName = "SHARANYA";
 		user = userDAO.getUser(userName);
 		System.out.println("Name - "+user.getFirst_name());
 		System.out.println("Date - "+user.getDob());
@@ -95,7 +95,7 @@ public class UserTestCases
 	public void list()
 	{
 		log.info("List Users");
-		List<UserDet> list = userDAO.getUserList();
+		List<User> list = userDAO.getUserList();
 		int size = list.size(); 
 		for(int index = 0; index < size; index++)
 		{

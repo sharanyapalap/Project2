@@ -29,7 +29,7 @@ public class EventTestCases
 	public EventTestCases()
 	{	
 		context = new AnnotationConfigApplicationContext();
-		context.scan("com.niit.collaboration");
+		context.scan("com.niit.Backend");
 		context.refresh();
 
 		eventDAO = (EventDao) context.getBean("eventDAO");

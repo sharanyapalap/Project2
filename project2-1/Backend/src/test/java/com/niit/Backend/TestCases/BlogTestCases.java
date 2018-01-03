@@ -27,7 +27,7 @@ Logger log = LoggerFactory.getLogger(UserTestCases.class);
 	public BlogTestCases()
 	{	
 		context = new AnnotationConfigApplicationContext();
-		context.scan("com.niit.collaboration");
+		context.scan("com.niit.Backend");
 		context.refresh();
 
 		blogDAO = (BlogDao) context.getBean("blogDAO");

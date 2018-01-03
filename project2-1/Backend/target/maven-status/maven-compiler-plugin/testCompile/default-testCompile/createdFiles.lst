@@ -1,2 +1,6 @@
+com\niit\Backend\TestCases\BlogTestCases.class
+com\niit\Backend\TestCases\ForumTestCases.class
 com\niit\Backend\AppTest.class
+com\niit\Backend\TestCases\EventTestCases.class
+com\niit\Backend\TestCases\JobTestCases.class
 com\niit\Backend\TestCases\UserTestCases.class

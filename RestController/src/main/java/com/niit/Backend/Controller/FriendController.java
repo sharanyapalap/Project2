@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niit.Backend.Dao.FriendDao;
 import com.niit.Backend.Dao.UserDao;
 import com.niit.Backend.Model.Friend;
-import com.niit.Backend.Model.UserDet;
+import com.niit.Backend.Model.User;
 
 
 @RestController
@@ -61,8 +61,8 @@ public class FriendController
 		if(check)
 		{
 			log.info("Adding Friend");
-			UserDet user = userDAO.getUser(session.getAttribute("username").toString());
-			UserDet friendData = userDAO.getUser(friendID);
+			User user = userDAO.getUser(session.getAttribute("username").toString());
+			User friendData = userDAO.getUser(friendID);
 			friend.setUserID(session.getAttribute("username").toString());
 			friend.setFriendID(friendID);
 			friend.setStatus('P');
